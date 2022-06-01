@@ -19,6 +19,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 	// == my personal exception message tester
 	private final String jamesExceptionMessage = "James testing customized execption for understanding";
+	
 	// == applies to all controller exceptions
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> handleAllException
@@ -42,6 +43,18 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
+	
+	// == applies to all UserPostNotFoundException
+		@ExceptionHandler(UserPostNotFoundException.class)
+		public final ResponseEntity<Object> handleUserPostNotFoundException
+			(UserNotFoundException ex, WebRequest request) throws Exception {
+			
+			ExceptionResponse exceptionResponse = 
+					new ExceptionResponse(new Date(), ex.getMessage(), 
+					request.getDescription(true), jamesExceptionMessage);
+			
+			return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+		}
 	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(

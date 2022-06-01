@@ -1,14 +1,18 @@
 package com.in28minutes.rest.webservices.model.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.in28minutes.rest.webservices.model.post.UserPost;
 
 @Entity
 public class User {
@@ -26,6 +30,10 @@ public class User {
 	@Column(name = "DOB")
 	private Date birthDate;
 	
+	// == create relationship column of user within UserPost table
+	// == mappedby the instance variable corresponding to this instance
+	@OneToMany(mappedBy = "user")
+	private List<UserPost> posts;
 	
 	public User() {
 	}
@@ -60,6 +68,14 @@ public class User {
 		this.birthDate = birthDate;
 	}
 	
+	public List<UserPost> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<UserPost> posts) {
+		this.posts = posts;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", birthDate=" + birthDate + "]";
